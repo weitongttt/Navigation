@@ -1,0 +1,81 @@
+#include<iostream>
+#include<graphics.h>
+#include<Windows.h>
+#include <conio.h>
+#include <cstdlib>
+#include <ctime>
+#include<vector>
+#include "button.h"
+using namespace std;
+int PicX = 0, PicY = 0;
+
+IMAGE graph()
+{
+	initgraph(1200, 900, SHOWCONSOLE);//750，500, SHOWCONSOLE
+	printf("helloworld");
+	setbkcolor(WHITE);
+	cleardevice();
+	IMAGE picture;	// 定义 IMAGE 对象
+	ExMessage  m;
+	loadimage(&picture, L"my_picture.png", 1200, 900);
+	putimage(PicX, PicY, &picture);
+	//_getch();//将端口停留在图片界面
+	//closegraph();
+	return picture;
+}
+
+int main()
+{
+	ExMessage  m;
+	IMAGE picture = graph();
+	int OriX = -1, OriY = -1;
+	int time_num = 0, pixel = 0;
+	putimage(0, 0, &picture);
+	botton b1(250, 420, 35, 20, L"西部");
+	botton b2(350, 420, 35, 20, L"中部");
+	botton b3(450, 420, 35, 20, L"北部");
+	while (1)
+	{
+		peekmessage(&m, EM_MOUSE);
+		if (m.message == WM_LBUTTONDOWN)   //左键按下 
+		{
+			int X = m.x, Y = m.y;
+			cout << X << Y;
+			if ((m.x < 280) && (m.x > 220) && (m.y < 440) && (m.y > 400))
+			{
+				b1.LBOTTON_DOWN();
+				b1.LONTTON_UP();
+				pixel = pixel + 10;
+				cleardevice();
+				loadimage(&picture, L"west.png", 360, 900);
+				putimage(840, 0, &picture);
+			}
+			if ((m.x < 380) && (m.x > 320) && (m.y < 440) && (m.y > 400))
+			{
+				b2.LBOTTON_DOWN();
+				b2.LONTTON_UP();
+				pixel = pixel - 10;
+				cleardevice();
+				loadimage(&picture, L"middle.png", 1200, 800);
+				putimage(0, 100, &picture);
+			}
+			if ((m.x < 480) && (m.x > 420) && (m.y < 440) && (m.y > 400))
+			{
+				b3.LBOTTON_DOWN();
+				b3.LONTTON_UP();
+				pixel = pixel - 10;
+				cleardevice();
+				loadimage(&picture, L"north.png", 1000, 600);
+				putimage(0, 0, &picture);
+			}
+		}
+		if (m.message == WM_RBUTTONDOWN)  //右键按起
+		{
+			fillcircle(m.x, m.y, 5);     //画填充圆
+			setfillcolor(RED);
+		}
+	}
+	//closegraph();
+
+	return 0;
+}
