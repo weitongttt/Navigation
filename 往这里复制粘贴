@@ -1,3 +1,4 @@
+//main.cpp
 #include<iostream>
 #include<graphics.h>
 #include<Windows.h>
@@ -150,4 +151,74 @@ int main()
 	//closegraph();
 
 	return 0;
+}
+
+//location_information.cpp
+#include<iostream>
+#include<graphics.h>
+#include<string.h>
+#include"button.h"
+
+using namespace std;
+
+struct info
+{
+	char name[20];
+	char information[200];
+}my_info[20];
+
+void info_get()
+{
+	strcpy(my_info[0].name,"令希图书馆");
+	strcpy(my_info[0].information,"开放时间：周日-周五07:50-21:30周六：07:50-16:30（寒暑假及节假日开放时间另行通\
+								  知;图书馆开放时间根据校历及临时情况将有所改变，请读者留意图书馆的告示及网上公告。）");
+
+	strcpy(my_info[1].name,"第二综合教学楼");
+	strcpy(my_info[1].information," 信息：综合教学2号楼以开放式的室内空间序列和庭院式室外空间取代旧的链式空间模式，\\n\
+		                            将教学空间（各类教室、实验室、办公室）和非教学空间（门厅、中庭、联系走廊）\\n\
+									二者视为同等重要、互相依存的整体");
+
+	strcpy(my_info[2].name,"西部田径场");
+	strcpy(my_info[2].information,"信息：无");
+
+}
+
+ void west_information(IMAGE picture)
+{
+	info_get();
+	ExMessage  m;
+	IMAGE picture2;
+	peekmessage(&m, EM_MOUSE);
+	if (m.message == WM_RBUTTONDOWN)  //右键按起
+	{
+		cleardevice();
+		loadimage(&picture, "west.png", 500, 500);
+	    putimage(250, 0, &picture);
+		botton b4(350, 480, 35, 20, "返回");
+		cout<<m.x<<" "<<m.y<<endl;
+		fillcircle(m.x, m.y, 5);     //画填充圆
+		setfillcolor(RED);
+		if((m.x < 390) && (m.x > 330) && (m.y < 345) && (m.y > 300))
+		{
+			loadimage(&picture2, "xibutianjing.png", 200, 300);
+	        putimage(0,250, &picture2);
+			outtextxy(50,0,my_info[2].name);
+			outtextxy(50,20,my_info[2].information);
+		}
+		if((m.x < 530) && (m.x > 460) && (m.y < 340) && (m.y > 290))
+		{
+			loadimage(&picture2, "lingxi.png", 200, 300);
+	        putimage(0,250, &picture2);
+			outtextxy(50,0,my_info[0].name);
+			outtextxy(50,20,my_info[0].information);
+		}
+		if((m.x < 650) && (m.x > 600) && (m.y < 360) && (m.y > 340))
+		{
+			loadimage(&picture2, "zonger.png", 200, 300);
+	        putimage(0,250, &picture2);
+			outtextxy(50,0,my_info[1].name);
+			outtextxy(50,20,my_info[1].information);
+		}
+	}
+	
 }
