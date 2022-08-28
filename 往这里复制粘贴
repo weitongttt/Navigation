@@ -1,1 +1,153 @@
+#include<iostream>
+#include<graphics.h>
+#include<Windows.h>
+#include <conio.h>
+#include <cstdlib>
+#include <ctime>
+#include<vector>
+#include "button.h"
+#include"location_information.h"
+using namespace std;
+int PicX = 0, PicY = 0;
 
+IMAGE graph()
+{
+	initgraph(750, 500, SHOWCONSOLE);//750，500, SHOWCONSOLE
+	setbkcolor(WHITE);
+	cleardevice();
+	IMAGE picture;	// 定义 IMAGE 对象
+	loadimage(&picture, "my_picture.png", 750, 500);
+	putimage(PicX, PicY, &picture);
+	return picture;
+}
+
+void west_part(IMAGE picture)
+{
+	ExMessage  m;
+	loadimage(&picture, "west.png", 500, 500);
+	putimage(250, 0, &picture);
+	botton b4(350, 480, 35, 20, "返回");
+	while(1)
+	{
+		west_information(picture);
+		peekmessage(&m, EM_MOUSE);
+		if (m.message == WM_LBUTTONDOWN)
+		{
+			if ((m.x < 380) && (m.x > 320) && (m.y < 500) && (m.y > 460))
+		    {
+				cout<<m.x<<" "<<m.y<<endl;
+			    b4.LBOTTON_DOWN();
+			    b4.LONTTON_UP();
+			    cleardevice();
+			    loadimage(&picture, "my_picture.png", 750, 500);
+	            putimage(PicX, PicY, &picture);
+			    botton b1(250, 420, 35, 20, "西部");
+	            botton b2(350, 420, 35, 20, "中部");
+	            botton b3(450, 420, 35, 20, "北部");
+			    break;
+		    }
+		}
+	}
+}
+
+void middle_part(IMAGE picture)
+{
+	ExMessage  m;
+	loadimage(&picture, "middle.png", 500, 500);
+	putimage(250, 0, &picture);
+	botton b4(350, 480, 35, 20, "返回");
+	while(1)
+	{
+		peekmessage(&m, EM_MOUSE);
+		if (m.message == WM_LBUTTONDOWN)
+		{
+			if ((m.x < 380) && (m.x > 320) && (m.y < 500) && (m.y > 460))
+		    {
+			    b4.LBOTTON_DOWN();
+			    b4.LONTTON_UP();
+			    cleardevice();
+			    loadimage(&picture, "my_picture.png", 750, 500);
+	            putimage(PicX, PicY, &picture);
+			    botton b1(250, 420, 35, 20, "西部");
+	            botton b2(350, 420, 35, 20, "中部");
+	            botton b3(450, 420, 35, 20, "北部");
+			    break;
+		    }
+		}
+	}
+}
+
+void north_part(IMAGE picture)
+{
+	ExMessage  m;
+	loadimage(&picture, "north.png", 500, 500);
+	putimage(250, 0, &picture);
+	botton b4(350, 480, 35, 20, "返回");
+	while(1)
+	{
+		peekmessage(&m, EM_MOUSE);
+		if (m.message == WM_LBUTTONDOWN)
+		{
+			if ((m.x < 380) && (m.x > 320) && (m.y < 500) && (m.y > 460))
+		    {
+			    b4.LBOTTON_DOWN();
+			    b4.LONTTON_UP();
+			    cleardevice();
+			    loadimage(&picture, "my_picture.png", 750, 500);
+	            putimage(PicX, PicY, &picture);
+			    botton b1(250, 420, 35, 20, "西部");
+	            botton b2(350, 420, 35, 20, "中部");
+	            botton b3(450, 420, 35, 20, "北部");
+			    break;
+		    }
+		}
+	}
+}
+
+int main()
+{
+	ExMessage  m;
+	IMAGE picture = graph();
+	int time_num = 0;
+	putimage(0, 0, &picture);
+	botton b1(250, 420, 35, 20, "西部");
+	botton b2(350, 420, 35, 20, "中部");
+	botton b3(450, 420, 35, 20, "北部");
+	while (1)
+	{
+		peekmessage(&m, EM_MOUSE);
+		if (m.message == WM_LBUTTONDOWN)   //左键按下 
+		{
+			if ((m.x < 280) && (m.x > 220) && (m.y < 440) && (m.y > 400))
+			{
+				m.x=0;
+				m.y=0;
+				b1.LBOTTON_DOWN();
+				b1.LONTTON_UP();
+				cleardevice();
+				west_part(picture);
+			}
+			if ((m.x < 380) && (m.x > 320) && (m.y < 440) && (m.y > 400))
+			{
+				m.x=0;
+				m.y=0;
+				b2.LBOTTON_DOWN();
+				b2.LONTTON_UP();
+				cleardevice();
+				middle_part(picture);
+			}
+			if ((m.x < 480) && (m.x > 420) && (m.y < 440) && (m.y > 400))
+			{
+				m.x=0;
+				m.y=0;
+				b3.LBOTTON_DOWN();
+				b3.LONTTON_UP();
+				cleardevice();
+				north_part(picture);
+			}
+		}
+	}
+	//closegraph();
+
+	return 0;
+}
